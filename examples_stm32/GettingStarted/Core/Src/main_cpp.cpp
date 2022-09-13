@@ -1,10 +1,11 @@
 #include "main_cpp.h"
 #include <stdint.h>
+#include <string.h>
 
-// Includes he peripheral initialization files (make sure to mark
+// Includes the peripheral initialization files (make sure to mark
 // "Generate peripheral initialization as a pair of '.c/.h' files per
 // peripheral" in CubeMX editor -> Project Manager -> Code Generator
-#include "spi.h"
+#include "spi.h"            // from Core/Inc/spi.h
 #include "usbd_cdc_if.h"
 
 // RF24 driver
@@ -13,11 +14,11 @@
 
 // The BluePill has a USB Virtual COM, but you may customize this define
 // to what fits your hardware
-#define print(x) CDC_Transmit_FS((uint8_t*) x, sizeof(x))
+#define print(x) CDC_Transmit_FS((uint8_t*) x, strlen(x))
 
 // Instantiate an object for the nRF24L01 transceiver and the respective spi
 RF24 radio(RF24_PB0, RF24_PB1);  // using pin PB0 for the CE pin, and pin PB1 for the CSN pin
-RF24_SPI rf24_spi;
+RF24_SPI rf24_spi;               // you want to use other spi handler than spi 1
 
 // Let these addresses be used for the pair
 uint8_t address[][6] = { "1Node", "2Node" };
@@ -92,7 +93,7 @@ void loop() {
         }
 
         // to make this example readable in the serial monitor
-        delay(1000);  // slow transmissions down by 1 second
+        HAL_Delay(1000);  // slow transmissions down by 1 second
 
     }
     else
@@ -104,6 +105,7 @@ void loop() {
             uint8_t bytes = radio.getPayloadSize();  // get the size of the payload
             radio.read(&payload, bytes);             // fetch payload from FIFO
             sprintf(string_buffer, "Received %d bytes on pipe %d: %d\n", bytes, pipe, payload);
+            print(string_buffer);
         }
     }  // role
 }

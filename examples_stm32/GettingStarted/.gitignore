@@ -1,1 +1,16 @@
 /Debug/
+.mxproject
+.settings/
+Core/Inc/gpio.h
+Core/Inc/main.h
+Core/Inc/spi.h
+Core/Inc/stm32f1xx_hal_conf.h
+Core/Inc/stm32f1xx_it.h
+Core/Src/gpio.c
+Core/Src/spi.c
+Core/Src/stm32f1xx_hal_msp.c
+Core/Src/stm32f1xx_it.c
+Core/Src/system_stm32f1xx.c
+Drivers/
+Middlewares/
+USB_DEVICE/
